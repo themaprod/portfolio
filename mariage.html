@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mariages – Themaprod</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const form = document.getElementById('contact-form');
+  const message = document.getElementById('form-message');
+  if (!form) return;
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch(form.action, {
+        method: form.method,
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (response.ok) {
+        form.reset();
+        message.classList.add('visible');
+        // masquer le message après 5s
+        setTimeout(() => message.classList.remove('visible'), 5000);
+      } else {
+        message.textContent = '⚠️ Une erreur est survenue, merci de réessayer.';
+        message.style.color = 'orangered';
+        message.classList.add('visible');
+      }
+    } catch (err) {
+      message.textContent = '⚠️ Problème réseau — veuillez réessayer.';
+      message.style.color = 'orangered';
+      message.classList.add('visible');
+    }
+  });
+});
+</script>
+
+
+<body>
+  <!-- HEADER -->
+  <header class="site-header">
+    <nav class="navbar">
+      <a href="index.html" class="logo">Themaprod</a>
+      <div class="nav-links">
+        <a href="index.html">Accueil</a>
+        <a href="mariage.html" class="active">Mariages</a>
+        <a href="entreprise.html">Entreprise</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="page-hero" style="background-image:url('1. images/3. mariage/mariage-hero.jpg');">
+    <div class="page-hero-text">
+      <h1>Capturer vos plus beaux souvenirs</h1>
+      <p>Des films de mariage uniques, élégants et intemporels.</p>
+    </div>
+  </section>
+
+  <!-- DESCRIPTION -->
+  <section class="project-description">
+    <h1>Films de Mariage</h1>
+    <p>
+      Chaque mariage est une histoire unique. Mon objectif est de retranscrire vos émotions et de vous offrir un souvenir cinématographique, naturel et intemporel.
+    </p>
+  </section>
+
+   <!-- VIDEOS -->
+  <section class="project-gallery">
+    <h2>Films de Mariage</h2>
+    <div class="video-grid">
+      <div class="video-item">
+        <iframe src="https://www.youtube.com/embed/kMb6Rm5WoBY" frameborder="0" allowfullscreen></iframe>
+      </div>
+      <div class="video-item">
+        <iframe src="https://www.youtube.com/embed/MMGZibHmbSU" frameborder="0" allowfullscreen></iframe>
+      </div>
+      <div class="video-item">
+        <iframe src="https://www.youtube.com/embed/3vA0R-Nct4Q?si=OGO-vO1yv--S0y4u" frameborder="0" allowfullscreen></iframe>
+      </div>
+      <div class="video-item">
+        <iframe src="https://www.youtube.com/embed/I7JfBjbgWPU?si=9EI_h8W7OYdSQpux" frameborder="0" allowfullscreen></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALERIE -->
+  <section class="project-gallery">
+    <h2>Exemples visuels</h2>
+    <div class="visual-grid">
+      <div class="grid-item"><img src="1. images/3. mariage/m1.jpg" alt="Mariage 1"></div>
+      <div class="grid-item"><img src="1. images/3. mariage/m2.jpg" alt="Mariage 2"></div>
+      <div class="grid-item"><img src="1. images/3. mariage/m3.jpg" alt="Mariage 3"></div>
+      <div class="grid-item large"><img src="1. images/3. mariage/m4.jpg" alt="Mariage 4"></div>
+      <div class="grid-item"><img src="1. images/3. mariage/m5.jpg" alt="Mariage 5"></div>
+      <div class="grid-item"><img src="1. images/3. mariage/m6.jpg" alt="Mariage 5"></div>
+    </div>
+  </section>
+
+   <!-- CONTACT -->
+<section class="section contact-section" id="contact" aria-label="Contact">
+  <div class="contact-wrap">
+    <h2>Contactez-moi</h2>
+
+    <!-- Formulaire unique - remplacer l'URL par ton Formspree / endpoint -->
+    <form id="contact-form" action="https://formspree.io/f/xovnokng" method="POST" novalidate>
+      <div class="form-row">
+        <input type="text" name="name" placeholder="Votre nom" required>
+        <input type="email" name="email" placeholder="Votre email" required>
+      </div>
+
+      <textarea name="message" placeholder="Votre message" required></textarea>
+
+      <button type="submit">Envoyer</button>
+    </form>
+
+    <!-- Message de confirmation (géré par JS) -->
+    <p id="form-message" aria-live="polite">✅ Votre message a bien été envoyé !</p>
+  </div>
+</section>
+
+
+  </main>
+
+</body>
+
+</html>

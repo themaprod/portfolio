@@ -1,0 +1,529 @@
+:root{
+  --bg:#0d0d0d;
+  --accent:#c84b31; /* léger rouge ciné (tu peux remplacer) */
+  --muted:#bdbdbd;
+  --nav-h:72px;
+  --radius:10px;
+}
+
+/* === reset & base === */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family: 'Montserrat',sans-serif;
+  background:var(--bg);
+  color:#fff;
+  -webkit-font-smoothing:antialiased;
+  scroll-behavior:smooth;
+}
+
+/* === NAV === */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(6px);
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.logo {
+  font-family: 'Lora', serif;
+  font-weight: 700;
+  letter-spacing: 2px;
+  font-size: 1.2rem;
+  color: #fff;
+  text-decoration: none;
+}
+
+.nav-links a {
+  color: #fffefe;
+  margin-left: 24px;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 0.9rem;
+  text-decoration: none; /* pas souligné */
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: var(--accent);
+}
+
+/* === HERO IMAGE === */
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background: url("1. images/1. acceuil/1. haut/hero-bg.jpg") no-repeat center center;
+  background-size: cover;
+  z-index: 0;
+}
+
+.hero-caption {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  color: #ffffff;
+}
+
+.hero-caption h1 {
+  font-size: 3rem;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+}
+
+.hero-caption p {
+  font-size: 1.2rem;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+
+/* === VISUAL GRID avec bordures === */
+.visual-grid {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px; /* espace blanc visible */
+  padding: 10px;
+  background: #fff; /* fond blanc autour */
+  box-sizing: border-box;
+}
+
+.visual-grid .grid-item {
+  position: relative;
+  overflow: hidden;
+  border: 6px solid #fff; /* cadre blanc */
+  border-radius: 4px;
+  background: #fff;
+}
+
+.visual-grid .grid-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* image contenue */
+  display: block;
+  transition: transform 0.6s ease;
+}
+
+.visual-grid .grid-item:hover img {
+  transform: scale(1.05);
+}
+
+.visual-grid .large {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+/* Mobile responsive */
+@media (max-width: 1000px) {
+  .visual-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .visual-grid .large {
+    grid-column: auto;
+    grid-row: auto;
+    height: 50vh;
+  }
+}
+
+/* === snap container: we rely on browser scrolling (not overflow scroll) === */
+.snap-container{ /* main element in markup */
+  scroll-snap-type:y mandatory;
+}
+
+/* each section fills viewport minus nav height */
+.section{
+  min-height: calc(100vh - var(--nav-h));
+  padding-top: var(--nav-h); /* push content below nav */
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  scroll-snap-align:start;
+  position:relative;
+  overflow:hidden;
+}
+
+
+/* parallax target already has class .parallax (JS transforms it) */
+.hero .overlay{
+  position:absolute;inset:0;background:linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.6));z-index:1;
+}
+.hero img.hero-image{
+  position:absolute;inset:0;z-index:0;transform:translateZ(0);
+}
+
+.hero-caption{z-index:2;text-align:center;padding:0 24px}
+.hero-caption h1{font-family:'Lora',serif;font-size:clamp(2rem,6vw,4rem);margin-bottom:12px}
+.hero-caption p{color:var(--muted);font-size:clamp(1rem,1.2vw,1.2rem)}
+
+/* small screens: stack */
+@media (max-width:1000px){
+  .visual-grid{ grid-template-columns: repeat(2,1fr) }
+  .visual-grid .large{ grid-column:auto; grid-row:auto; height:50vh }
+}
+
+/* === PROJECTS (Accueil) === */
+.projects-section {
+  padding: 60px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.projects-grid {
+  width: 100%;
+  max-width: 1200px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.project-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.project-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: transform 0.4s ease;
+}
+
+.project-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0); /* invisible au repos */
+  color: white;
+  transition: background 0.3s ease;
+}
+
+.project-overlay h2,
+.project-overlay p {
+  z-index: 2;
+  transition: opacity 0.3s ease;
+}
+
+.view-project {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.2rem;
+  font-weight: 700;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 2;
+}
+
+/* Effet au survol */
+.project-card:hover img {
+  transform: scale(1.05);
+}
+
+.project-card:hover .project-overlay {
+  background: rgba(0, 0, 0, 0.6); /* voile gris */
+}
+
+.project-card:hover .view-project {
+  opacity: 1; /* texte apparaît au centre */
+}
+
+.project-card:hover h2,
+.project-card:hover p {
+  opacity: 0.3; /* texte de bas de carte atténué */
+}
+
+
+/* Mobile */
+@media (max-width: 900px) {
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+  .project-card {
+    height: 300px;
+  }
+}
+
+/* === SHOWREEL / presentation === */
+.showreel-wrap{ width:100%; max-width:1200px; margin:0 auto; display:flex; gap:40px; align-items:center; padding:0 20px; box-sizing:border-box; }
+.showreel-text{ flex:1; }
+.showreel-text h2{ font-family:'Lora',serif; margin-bottom:12px }
+.showreel-text p{ color:var(--muted); line-height:1.6 }
+
+.showreel-video{ flex:1; }
+.video-16-9{ width:100%; aspect-ratio:16/9; background:#000; border-radius:10px; overflow:hidden }
+.video-16-9 iframe{ width:100%; height:100%; border:0; display:block }
+
+/* mobile showreel */
+@media(max-width:1000px){
+  .showreel-wrap{ flex-direction:column; }
+  .showreel-video{ width:100% }
+}
+
+/* === CONTACT (corrigé : largeur, responsive, look) === */
+.contact-wrap {
+  width: 100%;
+  max-width: 1000px;     /* plus large pour ne pas paraître minuscule */
+  margin: 0 auto;
+  text-align: center;
+  padding: 30px 20px;
+  box-sizing: border-box;
+}
+
+.contact-wrap h2 {
+  font-family: 'Lora', serif;
+  margin-bottom: 18px;
+  font-size: 1.8rem;
+}
+
+/* form container */
+#contact-form {
+  width: 100%;
+  max-width: 880px;      /* largeur du formulaire */
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: stretch;  /* IMPORTANT: permet aux champs d'occuper la largeur */
+}
+
+/* ligne avec 2 inputs côte à côte */
+.form-row {
+  width: 100%;
+  display: flex;
+  gap: 12px;
+}
+
+/* input/textarea styles */
+#contact-form input,
+#contact-form textarea {
+  padding: 14px;
+  border-radius: 8px;
+  border: none;
+  background: #111;
+  color: #fff;
+  font-size: 1rem;
+  outline: none;
+  min-width: 0;          /* IMPORTANT pour flexbox (évite overflow) */
+}
+
+/* input dans la .form-row prennent la même place */
+.form-row input {
+  flex: 1 1 0;
+}
+
+/* textarea pleine largeur */
+#contact-form textarea {
+  width: 100%;
+  min-height: 150px;
+  resize: vertical;
+}
+
+/* bouton */
+#contact-form button {
+  align-self: center;
+  padding: 12px 26px;
+  border-radius: 8px;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.12s ease, filter 0.12s ease;
+}
+#contact-form button:hover { transform: translateY(-2px); filter: brightness(.98); }
+
+/* message de confirmation */
+#form-message {
+  margin-top: 12px;
+  font-weight: 600;
+  color: #4CAF50;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity .35s ease, transform .35s ease;
+  pointer-events: none;
+}
+#form-message.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* responsive : empiler les champs sur petit écran */
+@media (max-width: 700px) {
+  .form-row { flex-direction: column; }
+  #contact-form { max-width: 92%; }
+}
+
+
+
+/* === reveal animation === */
+.reveal{ opacity:0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease }
+.reveal.visible{ opacity:1; transform: translateY(0) }
+
+/* helper */
+a.project-link{ display:block; width:100%; height:100% }
+
+/* PAGE PROJET */
+.project-hero {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.project-description {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #333;
+}
+
+.project-description h1 {
+  font-size: 2.2rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.project-gallery {
+  max-width: 1200px;
+  margin: 60px auto;
+  padding: 0 20px;
+}
+
+.project-gallery h2 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.project-gallery .visual-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
+}
+
+.project-gallery .grid-item {
+  background: #fff;
+  border: 6px solid #fff;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.project-gallery .grid-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* === PAGE HERO (mariage & entreprise) === */
+.page-hero {
+  position: relative;
+  height: 60vh;
+  background: url("images/mariage-hero.jpg") center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.page-hero::after {
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.45);
+}
+
+.page-hero-text {
+  position:relative;
+  z-index:1;
+  color:#fff;
+  max-width:800px;
+  padding:0 20px;
+}
+
+.page-hero-text h1 {
+  font-family:'Lora',serif;
+  font-size:clamp(2rem,5vw,3rem);
+  margin-bottom:12px;
+}
+
+.page-hero-text p {
+  font-size:1.2rem;
+  color:var(--muted);
+}
+
+/* === description centrée === */
+.project-description {
+  max-width: 900px;
+  margin: 80px auto 40px;
+  padding: 0 20px;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  text-align: center;
+}
+
+/* === galerie spécifique === */
+.project-gallery {
+  max-width: 1200px;
+  margin: 60px auto;
+  padding: 0 20px;
+}
+
+.project-gallery h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-family: 'Lora', serif;
+}
+
+.project-gallery .visual-grid {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+/* === VIDEO GRID (mariage) === */
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.video-item {
+  aspect-ratio: 16/9;
+  background: #000;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+}
+
+.video-item iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+@media (max-width: 900px) {
+  .video-grid {
+    grid-template-columns: 1fr;
+  }
+}

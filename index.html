@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Themaprod - Portfolio</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Montserrat:wght@300;700&display=swap" rel="stylesheet">
+</head>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const form = document.getElementById('contact-form');
+  const message = document.getElementById('form-message');
+  if (!form) return;
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch(form.action, {
+        method: form.method,
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (response.ok) {
+        form.reset();
+        message.classList.add('visible');
+        // masquer le message après 5s
+        setTimeout(() => message.classList.remove('visible'), 5000);
+      } else {
+        message.textContent = '⚠️ Une erreur est survenue, merci de réessayer.';
+        message.style.color = 'orangered';
+        message.classList.add('visible');
+      }
+    } catch (err) {
+      message.textContent = '⚠️ Problème réseau — veuillez réessayer.';
+      message.style.color = 'orangered';
+      message.classList.add('visible');
+    }
+  });
+});
+</script>
+
+<body>
+  <!-- NAV -->
+  <header class="site-header">
+    <nav class="navbar">
+      <a href="index.html" class="logo">THEMAPROD</a>
+      <div class="nav-links">
+        <a href="mariage.html">Mariage</a>
+        <a href="entreprise.html">Entreprise</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Fullpage Sections (scroll-snapping) -->
+  <main class="snap-container">
+
+    <!-- SECTION 1 : HERO -->
+    <section class="section hero" aria-label="Intro">
+      <div class="hero-bg"></div> <!-- Image en background -->
+      <div class="hero-caption">
+        <h1>THEMAPROD</h1>
+        <p>Donner vie aux émotions et sublimer vos histoires à travers le cinéma.</p>
+      </div>
+    </section>
+
+    <!-- SECTION 2 : GRILLE VISUELLE -->
+    <section class="section visual-grid-section" aria-label="Visuels">
+      <div class="visual-grid">
+        <div class="grid-item large"><img src="1. images/1. acceuil/2. grille/1.JPG" alt="" loading="lazy"></div>
+        <div class="grid-item"><img src="1. images/1. acceuil/2. grille/2.JPG" alt="" loading="lazy"></div>
+        <div class="grid-item"><img src="1. images/1. acceuil/2. grille/3.JPG" alt="" loading="lazy"></div>
+        <div class="grid-item"><img src="1. images/1. acceuil/2. grille/4.JPG" alt="" loading="lazy"></div>
+        <div class="grid-item"><img src="1. images/1. acceuil/2. grille/5.JPG" alt="" loading="lazy"></div>
+        <div class="grid-item"><img src="1. images/1. acceuil/2. grille/6.JPG" alt="" loading="lazy"></div>
+      </div>
+    </section>
+
+    <!-- DESCRIPTION ENTREPRISE -->
+  <section class="project-description">
+    <h1>Vidéos d’Entreprise</h1>
+    <p>
+      Que ce soit pour mettre en avant votre marque, un produit ou raconter votre histoire, je crée des vidéos au style cinématographique adaptées à votre communication.
+    </p>
+    On réalise tout vous projet, peut importe l'ampleur,
+
+    </p>
+     nous prennons le temps de vraiment vous écouter pour répondre au mieux a vos besoin
+    </p>
+  </section>
+
+
+   <!-- SECTION 3 : PROJETS ENTREPRISE -->
+<section class="section projects-section" aria-label="Projets entreprise">
+  <div class="projects-grid">
+    <article class="project-card">
+      <a href="projet-entreprise-1.html" class="project-link">
+        <img src="1. images/2. entreprise/projet1-cover.jpg" alt="Projet Entreprise 1" loading="lazy">
+        <div class="project-overlay">
+          <h2>Projet Entreprise 1</h2>
+          <p>Film corporate — identité visuelle forte</p>
+          <span class="view-project">Voir le projet</span>
+        </div>
+      </a>
+    </article>
+
+    <article class="project-card">
+      <a href="projet-entreprise-2.html" class="project-link">
+        <img src="1. images/2. entreprise/projet2-cover.jpg" alt="Projet Entreprise 2" loading="lazy">
+        <div class="project-overlay">
+          <h2>Projet Entreprise 2</h2>
+          <p>Publicité — storytelling visuel</p>
+          <span class="view-project">Voir le projet</span>
+        </div>
+      </a>
+    </article>
+  </div>
+</section>
+
+
+    <!-- SECTION 4 : PRÉSENTATION + SHOWREEL -->
+    <section class="section showreel-section" aria-label="Présentation">
+      <div class="showreel-wrap">
+        <div class="showreel-text">
+          <h2>Mon approche</h2>
+          <p>
+            J'aborde chaque projet comme un court-métrage : concept fort, direction d'image soignée, et une narration au service de l'émotion.
+            Je m'appuie sur des compositions graphiques et une lumière travaillée pour donner à chaque frame une forte présence.
+          </p>
+        </div>
+
+        <div class="showreel-video">
+          <div class="video-16-9">
+            <iframe src="https://www.youtube.com/embed/kMb6Rm5WoBY" frameborder="0" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5 : CONTACT -->
+<section class="section contact-section" id="contact" aria-label="Contact">
+  <div class="contact-wrap">
+    <h2>Contactez-moi</h2>
+
+    <!-- Formulaire unique - remplacer l'URL par ton Formspree / endpoint -->
+    <form id="contact-form" action="https://formspree.io/f/xovnokng" method="POST" novalidate>
+      <div class="form-row">
+        <input type="text" name="name" placeholder="Votre nom" required>
+        <input type="email" name="email" placeholder="Votre email" required>
+      </div>
+
+      <textarea name="message" placeholder="Votre message" required></textarea>
+
+      <button type="submit">Envoyer</button>
+    </form>
+
+    <!-- Message de confirmation (géré par JS) -->
+    <p id="form-message" aria-live="polite">✅ Votre message a bien été envoyé !</p>
+  </div>
+</section>
+
+
+  </main>
+
+</body>
+</html>
